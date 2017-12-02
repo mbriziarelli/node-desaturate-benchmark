@@ -15,5 +15,8 @@
     "benchmark:jimp": "node . --jimp",
     "benchmark:jsmono": "node . --jsmono",
     "benchmark:jsmulti": "node . --jsmulti"
+  },
+  "devDependencies": {
+    "eslint": "^4.12.1"
   }
 }
