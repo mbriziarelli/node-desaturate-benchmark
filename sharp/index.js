@@ -16,10 +16,13 @@ function benchmarkSharp (imgPath, iterations) {
     let desaturatedImage, nanoseconds
   
     timerStart(timerDesc)
-    for (let i = 0; i < iterations; i++) {
-      desaturatedImage = colorPalette.clone().greyscale();
+    if (iterations === 1) {
+      desaturatedImage = colorPalette.greyscale()
+    } else for (let i = 0; i < iterations; i++) {
+      desaturatedImage = colorPalette.clone().greyscale()
     }
     nanoseconds = timerEnd(timerDesc)
+    
     desaturatedImage
       .toFormat('png')
       .toFile(path.resolve(__dirname, './desaturated.png'))

@@ -1,14 +1,19 @@
 const path = require('path')
 const program = require('commander')
 
-const { desaturate } = require("./desaturate");
 const { benchmarkJimp } = require('./jimp')
-// const { benchmarkSharp } = require('./sharp')
+const { benchmarkSharp } = require('./sharp')
 const { benchmarkJSMono } = require('./js-mono')
 // const { benchmarkJSMulti } = require('./js-multi')
 const { timerStart, timerEnd, displayTime } = require('./hr-timer')
 const { IMAGE_FULL_PATH } = require('./image-load-save')
 
+/**
+ * Runs the given benchmark callback and displays the time
+ * @param {(imgPath: string, iterations: number) => Promise<number>} benchCallback - benchmark callback
+ * @param {number} iterations - number of times the benchmark should be run
+ * @param {string} name - benchmark name
+ */
 async function benchmark (benchCallback, iterations, name) {
   try {
     const nanoseconds = await benchCallback(IMAGE_FULL_PATH, iterations)
@@ -38,9 +43,13 @@ program
 
 if (program.jimp) {
   benchmark(benchmarkJimp, program.iterations, 'Jimp')
-} else if (program.sharp) {
-  // benchmark(benchmarkSharp, program.iterations, 'Sharp')
-} else if (program.javascript) {
+}
+
+if (program.sharp) {
+  benchmark(benchmarkSharp, program.iterations, 'Sharp')
+}
+
+if (program.javascript) {
   if (program.cluster) {
     // benchmark(benchmarkJSMulti, program.iterations, 'JavaScript Cluster')
   } else {
