@@ -57,5 +57,9 @@ typings/
 # dotenv environment variables file
 .env
 
+# Project specific files/folders
 # Golang compiled app
 app
+
+# Desaturated images
+desaturated.png

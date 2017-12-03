@@ -14,13 +14,16 @@ function benchmarkJimp (imgPath, iterations) {
   return Jimp
     .read(imgPath)
     .then(image => {
-      let desaturatedImage
+      let desaturatedImage, nanoseconds
 
       timerStart(timerDesc)
-      for (let i = 0; i < iterations; i++) {
+      if (iterations === 1) {
+        desaturatedImage = image.grayscale()
+      } else for (let i = 0; i < iterations; i++) {
         desaturatedImage = image.clone().grayscale()
       }
-      let nanoseconds = timerEnd(timerDesc)
+      nanoseconds = timerEnd(timerDesc)
+
       desaturatedImage.write(path.resolve(__dirname, 'desaturated.png'), () => {})
 
       return nanoseconds

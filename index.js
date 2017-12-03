@@ -1,43 +1,49 @@
 const path = require('path')
+const program = require('commander')
 
 const { desaturate } = require("./desaturate");
 const { benchmarkJimp } = require('./jimp')
-const { benchmarkSharp } = require('./sharp')
+// const { benchmarkSharp } = require('./sharp')
 const { benchmarkJSMono } = require('./js-mono')
-const { benchmarkJSMulti } = require('./js-multi')
+// const { benchmarkJSMulti } = require('./js-multi')
 const { timerStart, timerEnd, displayTime } = require('./hr-timer')
-const imageAbsolutePath = path.resolve('./color-palette.png')
+const { IMAGE_FULL_PATH } = require('./image-load-save')
 
-function benchmark (benchCallback, iterations, name) {
-  benchCallback(imageAbsolutePath, iterations)
-    .then(nanoseconds => {
-      displayTime(`${name} benchmark total time: `, nanoseconds)
-      if (iterations > 1) {
-        displayTime(`${name} benchmark mean iteration time: `, nanoseconds/iterations)
-      }
-    })
-    .catch(err => {
-      console.log(`${name} benchmark failed`, err ? err.message : '')
-    })
-}
+async function benchmark (benchCallback, iterations, name) {
+  try {
+    const nanoseconds = await benchCallback(IMAGE_FULL_PATH, iterations)
 
-function main(param) {
-  switch (param) {
-    case "--jimp":
-      benchmark(benchmarkJimp, 10, 'Jimp')
-      break
-    case "--sharp":
-      benchmark(benchmarkSharp, 10, 'Sharp')
-      break
-    case "--jsmono":
-      benchmark(benchmarkJSMono, 100, 'JavaScript one thread')
-      break
-    case "--jsmulti":
-      benchmark(benchmarkJSMulti, 1, 'JavaScript multi-thread')
-      break
-    default:
-      console.log("bad parameter")
+    displayTime(`${name} benchmark total time: `, nanoseconds)
+    if (iterations > 1) {
+      displayTime(`${name} benchmark mean iteration time: `, nanoseconds/iterations)
+    }
+
+  } catch (error) {
+    if (error && error.message) {
+      console.log(`${name} benchmark failed: ${error.message}`)
+    } else {
+      console.log(`${name} benchmark failed.`)
+    }
   }
 }
 
-main(process.argv[2])
+program
+  .version('1.0.0')
+  .option('-j, --jimp', 'Run the Jimp benchmark.')
+  .option('-s, --sharp', 'Run the Sharp benchmark.')
+  .option('-js, --javascript', 'Run the JavaScript benchmark.')
+  .option('-m, --cluster', 'Run the JavaScript benchmark in cluster mode. No effect on other benchmarks.')
+  .option('-i, --iterations <iterations>', 'The number of times a given benchmark should be run. Default to 1', 1)
+  .parse(process.argv)
+
+if (program.jimp) {
+  benchmark(benchmarkJimp, program.iterations, 'Jimp')
+} else if (program.sharp) {
+  // benchmark(benchmarkSharp, program.iterations, 'Sharp')
+} else if (program.javascript) {
+  if (program.cluster) {
+    // benchmark(benchmarkJSMulti, program.iterations, 'JavaScript Cluster')
+  } else {
+    benchmark(benchmarkJSMono, program.iterations, 'JavaScript')
+  }
+}
