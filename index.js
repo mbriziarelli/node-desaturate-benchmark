@@ -4,6 +4,7 @@ const program = require('commander')
 const { benchmarkJimp } = require('./jimp')
 const { benchmarkSharp } = require('./sharp')
 const { benchmarkJSMono } = require('./js-mono')
+const { benchmarkJSWasm } = require('./js-wasm')
 // const { benchmarkJSMulti } = require('./js-multi')
 const { timerStart, timerEnd, displayTime } = require('./hr-timer')
 const { IMAGE_FULL_PATH } = require('./image-load-save')
@@ -37,6 +38,7 @@ program
   .option('-j, --jimp', 'Run the Jimp benchmark.')
   .option('-s, --sharp', 'Run the Sharp benchmark.')
   .option('-r, --raw', 'Run the raw JavaScript benchmark.')
+  .option('-w, --wasm', 'Run the JavaScript + WebAssembly benchmark.')
   .option('-m, --cluster', 'Run the JavaScript benchmark in cluster mode. No effect on other benchmarks.')
   .option('-i, --iterations <iterations>', 'The number of times a given benchmark should be run. Default to 1', 1)
   .parse(process.argv)
@@ -47,6 +49,10 @@ if (program.jimp) {
 
 if (program.sharp) {
   benchmark(benchmarkSharp, program.iterations, 'Sharp')
+}
+
+if (program.wasm) {
+  benchmark(benchmarkJSWasm, program.iterations, 'JavaScript + WebAssembly')
 }
 
 if (program.raw) {
