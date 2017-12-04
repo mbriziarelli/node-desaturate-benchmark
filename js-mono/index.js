@@ -1,29 +1,55 @@
-const path = require('path')
-const Sharp = require('sharp')
-const { timerStart, timerEnd } = require('../hr-timer')
-const { desaturate } = require('./desaturate')
+const Jimp = require("jimp")
+const path = require("path")
+
+const { timerStart, timerEnd } = require("../hr-timer")
+const desaturatePixel = require('../desaturate').desaturateBT601
 
 const timerDesc = "benchmarkJSMono"
 
-async function benchmarkJSMono (imagePath, iterations) {
-  const image = Sharp(imagePath)
-  const { width, height, channels } = await image.metadata()
-  const buffer = await image.raw().toBuffer()
-  let desaturatedBuffer, nanoseconds
+/**
+ * Desaturate a Buffer
+ * @param {Buffer} srcBuffer
+ * @param {Buffer} destBuffer
+ * @param {number} channels - 1-4
+ */
+const desaturate = (srcBuffer, destBuffer, bufferLength) => {
+    let i = 0, grey
 
-  timerStart(timerDesc)
-  for (let i = 0; i < iterations; i++) {
-    desaturatedBuffer = desaturate(buffer, channels)
+    while (i < bufferLength) {
+        grey = Math.imul(desaturatePixel(srcBuffer[i], srcBuffer[i + 1], srcBuffer[i + 2]), 1)
+        i = destBuffer.writeUInt8(grey, i, true)
+        i = destBuffer.writeUInt8(grey, i, true)
+        i = destBuffer.writeUInt8(grey, i, true)
+        i = destBuffer.writeUInt8(srcBuffer[i], i, true)
+    }
+}
+
+/**
+ * Benchmark image desaturation using Jimp JavaScript only library.
+ * @param {string} imgPath
+ * @param {number} iterations
+ * @returns {Promise<number>}
+ */
+async function benchmarkJSMono(imgPath, iterations) {
+  try {
+    const image = await Jimp.read(imgPath)
+    const { data: srcBuffer, width, height } = image.bitmap
+    const bufferLength = srcBuffer.length
+    const destBuffer = Buffer.allocUnsafe(bufferLength)
+
+    timerStart(timerDesc)
+    for (let iter = 0; iter < iterations; iter++) {
+      desaturate(srcBuffer, destBuffer, bufferLength)
+    }
+    let nanoseconds = timerEnd(timerDesc)
+
+    image.bitmap.data = destBuffer
+    image.write(path.resolve(__dirname, './desaturated.png'))
+
+    return Promise.resolve(nanoseconds)
+  } catch (err) {
+    return Promise.reject(err)
   }
-  nanoseconds = timerEnd(timerDesc)
-
-  await Sharp(desaturatedBuffer, { raw: { width, height, channels: 1 }})
-    .png()
-    .toFile(path.resolve(__dirname, 'desaturated.png'))
-
-  return Promise.resolve(nanoseconds)
 }
 
-module.exports = {
-  benchmarkJSMono
-}
+module.exports = { benchmarkJSMono }

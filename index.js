@@ -36,7 +36,7 @@ program
   .version('1.0.0')
   .option('-j, --jimp', 'Run the Jimp benchmark.')
   .option('-s, --sharp', 'Run the Sharp benchmark.')
-  .option('-js, --javascript', 'Run the JavaScript benchmark.')
+  .option('-r, --raw', 'Run the raw JavaScript benchmark.')
   .option('-m, --cluster', 'Run the JavaScript benchmark in cluster mode. No effect on other benchmarks.')
   .option('-i, --iterations <iterations>', 'The number of times a given benchmark should be run. Default to 1', 1)
   .parse(process.argv)
@@ -49,7 +49,7 @@ if (program.sharp) {
   benchmark(benchmarkSharp, program.iterations, 'Sharp')
 }
 
-if (program.javascript) {
+if (program.raw) {
   if (program.cluster) {
     // benchmark(benchmarkJSMulti, program.iterations, 'JavaScript Cluster')
   } else {

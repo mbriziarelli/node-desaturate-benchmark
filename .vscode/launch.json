@@ -12,6 +12,15 @@
             "args": [
                 "--jimp"
             ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch JavaScript raw Benchmark",
+            "program": "${workspaceFolder}/index.js",
+            "args": [
+                "--raw"
+            ]
         }
     ]
 }
