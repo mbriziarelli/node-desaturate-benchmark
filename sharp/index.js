@@ -29,7 +29,7 @@ async function benchmarkSharp (imgPath, iterations) {
 
     return Promise.resolve(nanoseconds)
   } catch (error) {
-    throw error
+    return Promise.reject(error)
   }
 }
 
