@@ -1,7 +1,7 @@
 const Sharp = require('sharp')
 const path = require('path')
-const { timerStart, timerEnd } = require('../hr-timer')
 
+const { timerStart, timerEnd } = require('../hr-timer')
 const timerDesc = 'benchmarkSharp'
 
 /**
@@ -10,25 +10,27 @@ const timerDesc = 'benchmarkSharp'
  * @param {number} iterations 
  * @returns {Promise<number>}
  */
-function benchmarkSharp (imgPath, iterations) {
-  return new Promise(resolve => {
-    const colorPalette = Sharp(imgPath);
-    let desaturatedImage, nanoseconds
-  
+async function benchmarkSharp (imgPath, iterations) {
+  try {
+    const colorPalette = Sharp(imgPath)
+    let desaturatedImage
+
     timerStart(timerDesc)
     if (iterations === 1) {
-      desaturatedImage = colorPalette.greyscale()
+      desaturatedImage = await colorPalette.greyscale()
     } else for (let i = 0; i < iterations; i++) {
-      desaturatedImage = colorPalette.clone().greyscale()
+      desaturatedImage = await colorPalette.clone().greyscale()
     }
-    nanoseconds = timerEnd(timerDesc)
-    
+    let nanoseconds = timerEnd(timerDesc)
+
     desaturatedImage
       .toFormat('png')
       .toFile(path.resolve(__dirname, './desaturated.png'))
 
-    resolve(nanoseconds)
-  })
+    return Promise.resolve(nanoseconds)
+  } catch (error) {
+    throw error
+  }
 }
 
 module.exports = { benchmarkSharp }
