@@ -2,12 +2,11 @@ const Jimp = require("jimp")
 const path = require("path")
 const fs = require('fs')
 
+const wasmBytes = fs.readFileSync(path.resolve(__dirname, './program.wasm'))
 const { timerStart, timerEnd } = require("../hr-timer")
 const timerDesc = "benchmarkJSWasm"
 
 const instantiateWasm = () => {
-  const wasmBytes = fs.readFileSync(path.resolve(__dirname, './program.wasm'))
-
   return WebAssembly
     .instantiate(wasmBytes)
     .then(results => results.instance.exports)
@@ -41,10 +40,12 @@ async function benchmarkJSWasm(imgPath, iterations) {
     const { data: srcBuffer, width, height } = image.bitmap
     const bufferLength = srcBuffer.length
     const destBuffer = Buffer.allocUnsafe(bufferLength)
+    const { desaturateBuffer } = wasmExports
 
     timerStart(timerDesc)
     for (let iter = 0; iter < iterations; iter++) {
-      desaturate(srcBuffer, destBuffer, bufferLength, wasmExports)
+      desaturateBuffer(srcBuffer, destBuffer, bufferLength)
+      //  desaturate(srcBuffer, destBuffer, bufferLength, wasmExports)
     }
     let nanoseconds = timerEnd(timerDesc)
 
