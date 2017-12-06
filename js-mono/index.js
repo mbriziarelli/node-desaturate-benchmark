@@ -2,9 +2,20 @@ const Jimp = require("jimp")
 const path = require("path")
 
 const { timerStart, timerEnd } = require("../hr-timer")
-const desaturatePixel = require('../desaturate').desaturateBT601
+const desaturateBT601 = require('../desaturate').desaturateBT601
 
 const timerDesc = "benchmarkJSMono"
+
+const getDesaturator = (srcBuffer, destBuffer) => (index) => {
+  let grey = Math.imul(desaturateBT601(srcBuffer[index], srcBuffer[index + 1], srcBuffer[index + 2]), 1)
+
+  index = destBuffer.writeUInt8(grey, index, true)
+  index = destBuffer.writeUInt8(grey, index, true)
+  index = destBuffer.writeUInt8(grey, index, true)
+  index = destBuffer.writeUInt8(srcBuffer[index], index, true)
+
+  return index
+}
 
 /**
  * Desaturate a Buffer
@@ -13,14 +24,10 @@ const timerDesc = "benchmarkJSMono"
  * @param {number} channels - 1-4
  */
 const desaturate = (srcBuffer, destBuffer, bufferLength) => {
-    let i = 0, grey
-
+    let i = 0, desaturateUInt32 = getDesaturator(srcBuffer, destBuffer)
+    
     while (i < bufferLength) {
-        grey = Math.imul(desaturatePixel(srcBuffer[i], srcBuffer[i + 1], srcBuffer[i + 2]), 1)
-        i = destBuffer.writeUInt8(grey, i, true)
-        i = destBuffer.writeUInt8(grey, i, true)
-        i = destBuffer.writeUInt8(grey, i, true)
-        i = destBuffer.writeUInt8(srcBuffer[i], i, true)
+        i = desaturateUInt32(i)
     }
 }
 
