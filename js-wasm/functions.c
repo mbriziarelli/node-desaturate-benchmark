@@ -1,43 +1,32 @@
-/* https://wasdk.github.io/WasmFiddle/?taawz */
-/* https://wasdk.github.io/WasmFiddle/?9g5vz */
+/* https://wasdk.github.io/WasmFiddle/?k4qsn */
 
-const unsigned int redShift = 24;
-const unsigned int greenShift = 16;
-const unsigned int blueShift = 8;
+extern unsigned int readUInt32(int index);
+extern void writeUInt32(unsigned int pixel, int index);
 
-unsigned int desaturateBT601(double r, double g, double b) {
-  double grey = r * 0.299 + g * 0.587 + b * 0.114;
-  return (unsigned int)grey;
-}
+#define RED_SHIFT 24
+#define GREEN_SHIFT 16
+#define BLUE_SHIFT 8
 
-unsigned char desaturateBT601Byte(unsigned char r, unsigned char g, unsigned char b) {
-  return (unsigned char)((float)r * 0.299 + (float)g * 0.587 + (float)b * 0.114);
-}
+#define BYTE_MASK 0xFF
+#define RED_MASK (BYTE_MASK << RED_SHIFT)
+#define GREEN_MASK (BYTE_MASK << GREEN_SHIFT)
+#define BLUE_MASK (BYTE_MASK << BLUE_SHIFT)
+#define ALPHA_MASK BYTE_MASK
+#define GET_RED(pixel) (pixel & RED_MASK) >> RED_SHIFT
+#define GET_GREEN(pixel) (pixel & GREEN_MASK) >> GREEN_SHIFT
+#define GET_BLUE(pixel) (pixel & BLUE_MASK) >> BLUE_SHIFT
+#define GET_ALPHA(pixel) pixel & ALPHA_MASK
+#define DESATURATE_BT601(r, g, b) (unsigned int)((float)(r) * 0.299f + (float)(g) * 0.587f + (float)(b) * 0.114f) & BYTE_MASK
+#define DESATURATE_LUMA(r, g, b) (unsigned int)((float)(r) * 0.2126f + (float)(g) * 0.7152f + (float)(b) * 0.0722f) & BYTE_MASK
+#define DESATURATE_AVERAGE(r, g, b) (unsigned int)((r + g + b) / 3) & BYTE_MASK;
+#define GET_PIXEL(grey, alpha) ((grey) << RED_SHIFT) + ((grey) << GREEN_SHIFT) + ((grey) << BLUE_SHIFT) + (alpha) 
 
-unsigned int desaturateLuma(double r, double g, double b) {
-  double grey = r * 0.2126 + g * 0.7152 + b * 0.0722;
-  return (unsigned int)grey;
-}
+void desaturate(int bufferLength, int channels) {
+  unsigned int pixel, grey;
 
-unsigned int desaturateAverage(double r, double g, double b) {
-  double grey = (r + g + b) / 3;
-  return (unsigned int)grey;
-}
-
-int desaturateRGBA(int rgba) {
-  unsigned int red = (rgba >> redShift) & 0xFF;
-  unsigned int green = (rgba >> greenShift) & 0xFF;
-  unsigned int blue = (rgba >> blueShift) & 0xFF;
-  unsigned int alpha = rgba & 0xFF;
-  unsigned int grey = desaturateBT601((double) red, (double) green, (double) blue);
-  return (grey << redShift) + (grey << greenShift) + (grey << blueShift) + alpha;
-}
-
-void desaturateBuffer(unsigned char *src, unsigned char *dest, int length) {
-  unsigned char grey;
-  for (int i = 0; i < length; i += 4) {
-    grey = desaturateBT601Byte(src[i], src[i + 1], src[i + 2]);
-    dest[i] = dest[i + 1] = dest[i + 2] = grey;
-    dest[i + 3] = src[i + 3];
+  for (int index = 0; index < bufferLength; index += channels) {
+    pixel = readUInt32(index);
+    grey = DESATURATE_BT601(GET_RED(pixel), GET_GREEN(pixel), GET_BLUE(pixel));
+    writeUInt32(GET_PIXEL(grey, GET_ALPHA(pixel)), index);
   }
 }

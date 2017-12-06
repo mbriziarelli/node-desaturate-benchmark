@@ -6,25 +6,10 @@ const wasmBytes = fs.readFileSync(path.resolve(__dirname, './program.wasm'))
 const { timerStart, timerEnd } = require("../hr-timer")
 const timerDesc = "benchmarkJSWasm"
 
-const instantiateWasm = () => {
+const instantiateWasm = (options = {}) => {
   return WebAssembly
-    .instantiate(wasmBytes)
+    .instantiate(wasmBytes, options)
     .then(results => results.instance.exports)
-}
-
-/**
- * Desaturate a Buffer
- * @param {Buffer} srcBuffer
- * @param {Buffer} destBuffer
- * @param {number} channels - 1-4
- */
-const desaturate = (srcBuffer, destBuffer, bufferLength, wasmExports) => {
-    let i = 0
-    const { desaturateRGBA } = wasmExports
-
-    while (i < bufferLength) {
-      i = destBuffer.writeUInt32BE(desaturateRGBA(srcBuffer.readUInt32BE(i, true)), i, true)
-    }
 }
 
 /**
@@ -36,16 +21,24 @@ const desaturate = (srcBuffer, destBuffer, bufferLength, wasmExports) => {
 async function benchmarkJSWasm(imgPath, iterations) {
   try {
     const image = await Jimp.read(imgPath)
-    const wasmExports = await instantiateWasm()
     const { data: srcBuffer, width, height } = image.bitmap
     const bufferLength = srcBuffer.length
+    const channels = bufferLength / (width * height)
     const destBuffer = Buffer.allocUnsafe(bufferLength)
-    const { desaturateBuffer } = wasmExports
+
+    const options = {
+      env: {
+        readUInt32: (index) => srcBuffer.readUInt32BE(index),
+        writeUInt32: (value, index) => { destBuffer.writeUInt32BE(value, index, true) }
+      }
+    }
+
+    const wasmExports = await instantiateWasm(options)
+    const { desaturate } = wasmExports
 
     timerStart(timerDesc)
     for (let iter = 0; iter < iterations; iter++) {
-      desaturateBuffer(srcBuffer, destBuffer, bufferLength)
-      //  desaturate(srcBuffer, destBuffer, bufferLength, wasmExports)
+      desaturate(bufferLength, channels)
     }
     let nanoseconds = timerEnd(timerDesc)
 
