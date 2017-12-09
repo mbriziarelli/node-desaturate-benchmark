@@ -7,6 +7,7 @@
   (memory $0 1)
   (export "memory" (memory $0))
   (export "desaturate" (func $desaturate))
+  (export "desaturateVoid" (func $desaturateVoid))
   (func $desaturate (param $0 i32) (param $1 i32)
     (local $2 i32)
     (local $3 i32)
@@ -28,10 +29,10 @@
               (i32.or
                 (i32.shl
                   (tee_local $3
-                    (i32.trunc_u/f32
-                      (f32.add
-                        (f32.mul
-                          (f32.convert_u/i32
+                    (i32.div_u
+                      (i32.add
+                        (i32.add
+                          (i32.mul
                             (i32.and
                               (i32.shr_u
                                 (tee_local $2
@@ -39,37 +40,32 @@
                                     (get_local $4)
                                   )
                                 )
-                                (i32.const 8)
+                                (i32.const 16)
                               )
                               (i32.const 255)
                             )
+                            (i32.const 587)
                           )
-                          (f32.const 0.11400000005960464)
+                          (i32.mul
+                            (i32.shr_u
+                              (get_local $2)
+                              (i32.const 24)
+                            )
+                            (i32.const 299)
+                          )
                         )
-                        (f32.add
-                          (f32.mul
-                            (f32.convert_u/i32
-                              (i32.shr_u
-                                (get_local $2)
-                                (i32.const 24)
-                              )
+                        (i32.mul
+                          (i32.and
+                            (i32.shr_u
+                              (get_local $2)
+                              (i32.const 8)
                             )
-                            (f32.const 0.29899999499320984)
+                            (i32.const 255)
                           )
-                          (f32.mul
-                            (f32.convert_u/i32
-                              (i32.and
-                                (i32.shr_u
-                                  (get_local $2)
-                                  (i32.const 16)
-                                )
-                                (i32.const 255)
-                              )
-                            )
-                            (f32.const 0.5870000123977661)
-                          )
+                          (i32.const 114)
                         )
                       )
+                      (i32.const 1000)
                     )
                   )
                   (i32.const 24)
@@ -109,5 +105,7 @@
         )
       )
     )
+  )
+  (func $desaturateVoid (param $0 i32) (param $1 i32)
   )
 )

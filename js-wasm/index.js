@@ -34,7 +34,7 @@ async function benchmarkJSWasm(imgPath, iterations) {
     }
 
     const wasmExports = await instantiateWasm(options)
-    const { desaturate } = wasmExports
+    const { desaturate, desaturateVoid } = wasmExports
 
     timerStart(timerDesc)
     for (let iter = 0; iter < iterations; iter++) {
