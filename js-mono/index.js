@@ -7,7 +7,7 @@ const desaturateBT601 = require('../desaturate').desaturateBT601
 const timerDesc = "benchmarkJSMono"
 
 const getDesaturator = (srcBuffer, destBuffer) => (index) => {
-  const grey = Math.imul(desaturateBT601(srcBuffer[index], srcBuffer[index + 1], srcBuffer[index + 2]), 1)
+  const grey = desaturateBT601(srcBuffer[index], srcBuffer[index + 1], srcBuffer[index + 2])
   index = destBuffer.writeUInt8(grey, index, true)
   index = destBuffer.writeUInt8(grey, index, true)
   index = destBuffer.writeUInt8(grey, index, true)
