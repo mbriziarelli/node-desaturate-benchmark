@@ -1,18 +1,18 @@
-const Jimp = require("jimp")
-const path = require("path")
+const Jimp = require('jimp');
+const path = require('path');
 
-const { timerStart, timerEnd } = require("../hr-timer")
-const desaturateBT601 = require('../desaturate').desaturateBT601
+const { timerStart, timerEnd } = require('../hr-timer');
+const { desaturateBT601 } = require('../desaturate');
 
-const timerDesc = "benchmarkJSMono"
+const timerDesc = 'benchmarkJSMono';
 
 const getDesaturator = (srcBuffer, destBuffer) => (index) => {
-  const grey = desaturateBT601(srcBuffer[index], srcBuffer[index + 1], srcBuffer[index + 2])
-  index = destBuffer.writeUInt8(grey, index, true)
-  index = destBuffer.writeUInt8(grey, index, true)
-  index = destBuffer.writeUInt8(grey, index, true)
-  return destBuffer.writeUInt8(srcBuffer[index], index, true)
-}
+  const grey = desaturateBT601(srcBuffer[index], srcBuffer[index + 1], srcBuffer[index + 2]);
+  index = destBuffer.writeUInt8(grey, index, true);
+  index = destBuffer.writeUInt8(grey, index, true);
+  index = destBuffer.writeUInt8(grey, index, true);
+  return destBuffer.writeUInt8(srcBuffer[index], index, true);
+};
 
 /**
  * Desaturate a Buffer
@@ -21,12 +21,13 @@ const getDesaturator = (srcBuffer, destBuffer) => (index) => {
  * @param {number} channels - 1-4
  */
 const desaturate = (srcBuffer, destBuffer, bufferLength) => {
-    let i = 0, desaturateUInt32 = getDesaturator(srcBuffer, destBuffer)
-    
-    while (i < bufferLength) {
-        i = desaturateUInt32(i)
-    }
-}
+  let i = 0;
+  const desaturateUInt32 = getDesaturator(srcBuffer, destBuffer);
+
+  while (i < bufferLength) {
+    i = desaturateUInt32(i);
+  }
+};
 
 /**
  * Benchmark image desaturation using Jimp JavaScript only library.
@@ -36,24 +37,24 @@ const desaturate = (srcBuffer, destBuffer, bufferLength) => {
  */
 async function benchmarkJSMono(imgPath, iterations) {
   try {
-    const image = await Jimp.read(imgPath)
-    const { data: srcBuffer, width, height } = image.bitmap
-    const bufferLength = srcBuffer.length
-    const destBuffer = Buffer.allocUnsafe(bufferLength)
+    const image = await Jimp.read(imgPath);
+    const { data: srcBuffer } = image.bitmap;
+    const bufferLength = srcBuffer.length;
+    const destBuffer = Buffer.allocUnsafe(bufferLength);
 
-    timerStart(timerDesc)
-    for (let iter = 0; iter < iterations; iter++) {
-      desaturate(srcBuffer, destBuffer, bufferLength)
+    timerStart(timerDesc);
+    for (let iter = 0; iter < iterations; iter += 1) {
+      desaturate(srcBuffer, destBuffer, bufferLength);
     }
-    let nanoseconds = timerEnd(timerDesc)
+    const nanoseconds = timerEnd(timerDesc);
 
-    image.bitmap.data = destBuffer
-    image.write(path.resolve(__dirname, './desaturated.png'))
+    image.bitmap.data = destBuffer;
+    image.write(path.resolve(__dirname, './desaturated.png'));
 
-    return Promise.resolve(nanoseconds)
+    return Promise.resolve(nanoseconds);
   } catch (err) {
-    return Promise.reject(err)
+    return Promise.reject(err);
   }
 }
 
-module.exports = { benchmarkJSMono }
+module.exports = { benchmarkJSMono };

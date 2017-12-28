@@ -1,13 +1,13 @@
-const path = require('path')
-const program = require('commander')
+const program = require('commander');
 
-const { benchmarkJimp } = require('./jimp')
-const { benchmarkSharp } = require('./sharp')
-const { benchmarkJSMono } = require('./js-mono')
-const { benchmarkJSWasm } = require('./js-wasm')
+const { benchmarkJimp } = require('./jimp');
+const { benchmarkSharp } = require('./sharp');
+const { benchmarkJSMono } = require('./js-mono');
+const { benchmarkJSThreads } = require('./js-threads');
+const { benchmarkJSWasm } = require('./js-wasm');
 // const { benchmarkJSMulti } = require('./js-multi')
-const { timerStart, timerEnd, displayTime } = require('./hr-timer')
-const { IMAGE_FULL_PATH } = require('./image-load-save')
+const { displayTime } = require('./hr-timer');
+const { IMAGE_FULL_PATH } = require('./image-load-save');
 
 /**
  * Runs the given benchmark callback and displays the time
@@ -15,20 +15,19 @@ const { IMAGE_FULL_PATH } = require('./image-load-save')
  * @param {number} iterations - number of times the benchmark should be run
  * @param {string} name - benchmark name
  */
-async function benchmark (benchCallback, iterations, name) {
+async function benchmark(benchCallback, iterations, name) {
   try {
-    const nanoseconds = await benchCallback(IMAGE_FULL_PATH, iterations)
+    const nanoseconds = await benchCallback(IMAGE_FULL_PATH, iterations);
 
-    displayTime(`${name} benchmark total time: `, nanoseconds)
+    displayTime(`${name} benchmark total time: `, nanoseconds);
     if (iterations > 1) {
-      displayTime(`${name} benchmark mean iteration time: `, nanoseconds/iterations)
+      displayTime(`${name} benchmark mean iteration time: `, nanoseconds / iterations);
     }
-
   } catch (error) {
     if (error && error.message) {
-      console.log(`${name} benchmark failed: ${error.message}`)
+      console.log(`${name} benchmark failed: ${error.message}`);
     } else {
-      console.log(`${name} benchmark failed.`)
+      console.log(`${name} benchmark failed.`);
     }
   }
 }
@@ -39,26 +38,29 @@ program
   .option('-s, --sharp', 'Run the Sharp benchmark.')
   .option('-r, --raw', 'Run the raw JavaScript benchmark.')
   .option('-w, --wasm', 'Run the JavaScript + WebAssembly benchmark.')
+  .option('-t, --threads', 'Run the JavaScript benchmark using webworker-threads.')
   .option('-m, --cluster', 'Run the JavaScript benchmark in cluster mode. No effect on other benchmarks.')
   .option('-i, --iterations <iterations>', 'The number of times a given benchmark should be run. Default to 1', 1)
-  .parse(process.argv)
+  .parse(process.argv);
 
 if (program.jimp) {
-  benchmark(benchmarkJimp, program.iterations, 'Jimp')
+  benchmark(benchmarkJimp, program.iterations, 'Jimp');
 }
 
 if (program.sharp) {
-  benchmark(benchmarkSharp, program.iterations, 'Sharp')
+  benchmark(benchmarkSharp, program.iterations, 'Sharp');
 }
 
 if (program.wasm) {
-  benchmark(benchmarkJSWasm, program.iterations, 'JavaScript + WebAssembly')
+  benchmark(benchmarkJSWasm, program.iterations, 'JavaScript + WebAssembly');
 }
 
 if (program.raw) {
   if (program.cluster) {
     // benchmark(benchmarkJSMulti, program.iterations, 'JavaScript Cluster')
+  } else if (program.threads) {
+    benchmark(benchmarkJSThreads, program.iterations, 'JavaScript Threads');
   } else {
-    benchmark(benchmarkJSMono, program.iterations, 'JavaScript')
+    benchmark(benchmarkJSMono, program.iterations, 'JavaScript');
   }
 }

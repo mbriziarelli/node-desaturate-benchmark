@@ -21,6 +21,15 @@
             "args": [
                 "--raw"
             ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch JavaScript threads Benchmark",
+            "program": "${workspaceFolder}/index.js",
+            "args": [
+                "--raw", "--threads"
+            ]
         }
     ]
 }

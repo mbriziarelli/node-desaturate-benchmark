@@ -1,5 +1,5 @@
-const { IMAGE_FULL_PATH } = require('./constants')
+const { IMAGE_FULL_PATH } = require('./constants');
 
 module.exports = {
-    IMAGE_FULL_PATH
-}
+  IMAGE_FULL_PATH,
+};
