@@ -434,13 +434,6 @@ deep-extend@^0.6.0:
   resolved "https://ric.jfrog.io/ric/api/npm/npm/deep-extend/-/deep-extend-0.6.0.tgz#c4fa7c95404a17a9c3e8ca7e1537312b736330ac"
   integrity sha1-xPp8lUBKF6nD6Mp+FTcxK3NjMKw=
 
-define-properties@^1.1.2, define-properties@^1.1.3:
-  version "1.1.3"
-  resolved "https://ric.jfrog.io/ric/api/npm/npm/define-properties/-/define-properties-1.1.3.tgz#cf88da6cbee26fe6db7094f61d870cbd84cee9f1"
-  integrity sha1-z4jabL7ib+bbcJT2HYcMvYTO6fE=
-  dependencies:
-    object-keys "^1.0.12"
-
 delegates@^1.0.0:
   version "1.0.0"
   resolved "https://ric.jfrog.io/ric/api/npm/npm/delegates/-/delegates-1.0.0.tgz#84c6e159b81904fdca59a0ef44cd870d31250f9a"
@@ -463,31 +456,6 @@ end-of-stream@^1.1.0, end-of-stream@^1.4.1:
   dependencies:
     once "^1.4.0"
 
-es-abstract@^1.13.0, es-abstract@^1.5.1:
-  version "1.14.2"
-  resolved "https://ric.jfrog.io/ric/api/npm/npm/es-abstract/-/es-abstract-1.14.2.tgz#7ce108fad83068c8783c3cdf62e504e084d8c497"
-  integrity sha1-fOEI+tgwaMh4PDzfYuUE4ITYxJc=
-  dependencies:
-    es-to-primitive "^1.2.0"
-    function-bind "^1.1.1"
-    has "^1.0.3"
-    has-symbols "^1.0.0"
-    is-callable "^1.1.4"
-    is-regex "^1.0.4"
-    object-inspect "^1.6.0"
-    object-keys "^1.1.1"
-    string.prototype.trimleft "^2.0.0"
-    string.prototype.trimright "^2.0.0"
-
-es-to-primitive@^1.2.0:
-  version "1.2.0"
-  resolved "https://ric.jfrog.io/ric/api/npm/npm/es-to-primitive/-/es-to-primitive-1.2.0.tgz#edf72478033456e8dda8ef09e00ad9650707f377"
-  integrity sha1-7fckeAM0VujdqO8J4ArZZQcH83c=
-  dependencies:
-    is-callable "^1.1.4"
-    is-date-object "^1.0.1"
-    is-symbol "^1.0.2"
-
 exif-parser@^0.1.12:
   version "0.1.12"
   resolved "https://ric.jfrog.io/ric/api/npm/npm/exif-parser/-/exif-parser-0.1.12.tgz#58a9d2d72c02c1f6f02a0ef4a9166272b7760922"
@@ -503,13 +471,6 @@ file-type@^9.0.0:
   resolved "https://ric.jfrog.io/ric/api/npm/npm/file-type/-/file-type-9.0.0.tgz#a68d5ad07f486414dfb2c8866f73161946714a18"
   integrity sha1-po1a0H9IZBTfssiGb3MWGUZxShg=
 
-for-each@^0.3.3:
-  version "0.3.3"
-  resolved "https://ric.jfrog.io/ric/api/npm/npm/for-each/-/for-each-0.3.3.tgz#69b447e88a0a5d32c3e7084f3f1710034b21376e"
-  integrity sha1-abRH6IoKXTLD5whPPxcQA0shN24=
-  dependencies:
-    is-callable "^1.1.3"
-
 fs-constants@^1.0.0:
   version "1.0.0"
   resolved "https://ric.jfrog.io/ric/api/npm/npm/fs-constants/-/fs-constants-1.0.0.tgz#6be0de9be998ce16af8afc24497b9ee9b7ccd9ad"
@@ -521,11 +482,6 @@ fs-minipass@^2.0.0:
   integrity sha1-f1A2/b8SxjwWkZDL5BmchSJx+fs=
   dependencies:
     minipass "^3.0.0"
-
-function-bind@^1.1.1:
-  version "1.1.1"
-  resolved "https://ric.jfrog.io/ric/api/npm/npm/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
-  integrity sha1-pWiZ0+o8m6uHS7l3O3xe3pL0iV0=
 
 gauge@~2.7.3:
   version "2.7.4"
@@ -554,22 +510,10 @@ global@~4.3.0:
     min-document "^2.19.0"
     process "~0.5.1"
 
-has-symbols@^1.0.0:
-  version "1.0.0"
-  resolved "https://ric.jfrog.io/ric/api/npm/npm/has-symbols/-/has-symbols-1.0.0.tgz#ba1a8f1af2a0fc39650f5c850367704122063b44"
-  integrity sha1-uhqPGvKg/DllD1yFA2dwQSIGO0Q=
-
 has-unicode@^2.0.0:
   version "2.0.1"
   resolved "https://ric.jfrog.io/ric/api/npm/npm/has-unicode/-/has-unicode-2.0.1.tgz#e0e6fe6a28cf51138855e086d1691e771de2a8b9"
   integrity sha1-4Ob+aijPUROIVeCG0Wkedx3iqLk=
-
-has@^1.0.1, has@^1.0.3:
-  version "1.0.3"
-  resolved "https://ric.jfrog.io/ric/api/npm/npm/has/-/has-1.0.3.tgz#722d7cbfc1f6aa8241f16dd814e011e1f41e8796"
-  integrity sha1-ci18v8H2qoJB8W3YFOAR4fQeh5Y=
-  dependencies:
-    function-bind "^1.1.1"
 
 ieee754@^1.1.4:
   version "1.1.13"
@@ -591,16 +535,6 @@ is-arrayish@^0.3.1:
   resolved "https://ric.jfrog.io/ric/api/npm/npm/is-arrayish/-/is-arrayish-0.3.2.tgz#4574a2ae56f7ab206896fb431eaeed066fdf8f03"
   integrity sha1-RXSirlb3qyBolvtDHq7tBm/fjwM=
 
-is-callable@^1.1.3, is-callable@^1.1.4:
-  version "1.1.4"
-  resolved "https://ric.jfrog.io/ric/api/npm/npm/is-callable/-/is-callable-1.1.4.tgz#1e1adf219e1eeb684d691f9d6a05ff0d30a24d75"
-  integrity sha1-HhrfIZ4e62hNaR+dagX/DTCiTXU=
-
-is-date-object@^1.0.1:
-  version "1.0.1"
-  resolved "https://ric.jfrog.io/ric/api/npm/npm/is-date-object/-/is-date-object-1.0.1.tgz#9aa20eb6aeebbff77fbd33e74ca01b33581d3a16"
-  integrity sha1-mqIOtq7rv/d/vTPnTKAbM1gdOhY=
-
 is-fullwidth-code-point@^1.0.0:
   version "1.0.0"
   resolved "https://ric.jfrog.io/ric/api/npm/npm/is-fullwidth-code-point/-/is-fullwidth-code-point-1.0.0.tgz#ef9e31386f031a7f0d643af82fde50c457ef00cb"
@@ -617,20 +551,6 @@ is-function@^1.0.1:
   version "1.0.1"
   resolved "https://ric.jfrog.io/ric/api/npm/npm/is-function/-/is-function-1.0.1.tgz#12cfb98b65b57dd3d193a3121f5f6e2f437602b5"
   integrity sha1-Es+5i2W1fdPRk6MSH19uL0N2ArU=
-
-is-regex@^1.0.4:
-  version "1.0.4"
-  resolved "https://ric.jfrog.io/ric/api/npm/npm/is-regex/-/is-regex-1.0.4.tgz#5517489b547091b0930e095654ced25ee97e9491"
-  integrity sha1-VRdIm1RwkbCTDglWVM7SXul+lJE=
-  dependencies:
-    has "^1.0.1"
-
-is-symbol@^1.0.2:
-  version "1.0.2"
-  resolved "https://ric.jfrog.io/ric/api/npm/npm/is-symbol/-/is-symbol-1.0.2.tgz#a055f6ae57192caee329e7a860118b497a950f38"
-  integrity sha1-oFX2rlcZLK7jKeeoYBGLSXqVDzg=
-  dependencies:
-    has-symbols "^1.0.0"
 
 isarray@~1.0.0:
   version "1.0.0"
@@ -733,9 +653,9 @@ napi-build-utils@^1.0.1:
   integrity sha1-E4Gg+Sw51mvxmFLnhzQy/CEj5Qg=
 
 node-abi@^2.7.0:
-  version "2.11.0"
-  resolved "https://ric.jfrog.io/ric/api/npm/npm/node-abi/-/node-abi-2.11.0.tgz#b7dce18815057544a049be5ae75cd1fdc2e9ea59"
-  integrity sha1-t9zhiBUFdUSgSb5a51zR/cLp6lk=
+  version "2.14.0"
+  resolved "https://ric.jfrog.io/ric/api/npm/npm/node-abi/-/node-abi-2.14.0.tgz#24650e24e8ffad2b61352519263f0cf4e2ddbfe9"
+  integrity sha1-JGUOJOj/rSthNSUZJj8M9OLdv+k=
   dependencies:
     semver "^5.4.1"
 
@@ -764,24 +684,6 @@ object-assign@^4.1.0:
   resolved "https://ric.jfrog.io/ric/api/npm/npm/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
   integrity sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=
 
-object-inspect@^1.6.0:
-  version "1.6.0"
-  resolved "https://ric.jfrog.io/ric/api/npm/npm/object-inspect/-/object-inspect-1.6.0.tgz#c70b6cbf72f274aab4c34c0c82f5167bf82cf15b"
-  integrity sha1-xwtsv3LydKq0w0wMgvUWe/gs8Vs=
-
-object-keys@^1.0.12, object-keys@^1.1.1:
-  version "1.1.1"
-  resolved "https://ric.jfrog.io/ric/api/npm/npm/object-keys/-/object-keys-1.1.1.tgz#1c47f272df277f3b1daf061677d9c82e2322c60e"
-  integrity sha1-HEfyct8nfzsdrwYWd9nILiMixg4=
-
-object.getownpropertydescriptors@^2.0.3:
-  version "2.0.3"
-  resolved "https://ric.jfrog.io/ric/api/npm/npm/object.getownpropertydescriptors/-/object.getownpropertydescriptors-2.0.3.tgz#8758c846f5b407adab0f236e0986f14b051caa16"
-  integrity sha1-h1jIRvW0B62rDyNuCYbxSwUcqhY=
-  dependencies:
-    define-properties "^1.1.2"
-    es-abstract "^1.5.1"
-
 omggif@^1.0.9:
   version "1.0.10"
   resolved "https://ric.jfrog.io/ric/api/npm/npm/omggif/-/omggif-1.0.10.tgz#ddaaf90d4a42f532e9e7cb3a95ecdd47f17c7b19"
@@ -795,9 +697,9 @@ once@^1.3.1, once@^1.4.0:
     wrappy "1"
 
 pako@^1.0.5:
-  version "1.0.10"
-  resolved "https://ric.jfrog.io/ric/api/npm/npm/pako/-/pako-1.0.10.tgz#4328badb5086a426aa90f541977d4955da5c9732"
-  integrity sha1-Qyi621CGpCaqkPVBl31JVdpclzI=
+  version "1.0.11"
+  resolved "https://ric.jfrog.io/ric/api/npm/npm/pako/-/pako-1.0.11.tgz#6c9599d340d54dfd3946380252a35705a6b992bf"
+  integrity sha1-bJWZ00DVTf05RjgCUqNXBaa5kr8=
 
 parse-bmfont-ascii@^1.0.3:
   version "1.0.6"
@@ -818,12 +720,9 @@ parse-bmfont-xml@^1.1.4:
     xml2js "^0.4.5"
 
 parse-headers@^2.0.0:
-  version "2.0.2"
-  resolved "https://ric.jfrog.io/ric/api/npm/npm/parse-headers/-/parse-headers-2.0.2.tgz#9545e8a4c1ae5eaea7d24992bca890281ed26e34"
-  integrity sha1-lUXopMGuXq6n0kmSvKiQKB7SbjQ=
-  dependencies:
-    for-each "^0.3.3"
-    string.prototype.trim "^1.1.2"
+  version "2.0.3"
+  resolved "https://ric.jfrog.io/ric/api/npm/npm/parse-headers/-/parse-headers-2.0.3.tgz#5e8e7512383d140ba02f0c7aa9f49b4399c92515"
+  integrity sha1-Xo51Ejg9FAugLwx6qfSbQ5nJJRU=
 
 phin@^2.9.1:
   version "2.9.3"
@@ -892,9 +791,9 @@ rc@^1.2.7:
     strip-json-comments "~2.0.1"
 
 readable-stream@^2.0.6:
-  version "2.3.6"
-  resolved "https://ric.jfrog.io/ric/api/npm/npm/readable-stream/-/readable-stream-2.3.6.tgz#b11c27d88b8ff1fbe070643cf94b0c79ae1b0aaf"
-  integrity sha1-sRwn2IuP8fvgcGQ8+UsMea4bCq8=
+  version "2.3.7"
+  resolved "https://ric.jfrog.io/ric/api/npm/npm/readable-stream/-/readable-stream-2.3.7.tgz#1eca1cf711aef814c04f62252a36a62f6cb23b57"
+  integrity sha1-Hsoc9xGu+BTAT2IlKjamL2yyO1c=
   dependencies:
     core-util-is "~1.0.0"
     inherits "~2.0.3"
@@ -905,9 +804,9 @@ readable-stream@^2.0.6:
     util-deprecate "~1.0.1"
 
 readable-stream@^3.0.1, readable-stream@^3.1.1:
-  version "3.4.0"
-  resolved "https://ric.jfrog.io/ric/api/npm/npm/readable-stream/-/readable-stream-3.4.0.tgz#a51c26754658e0a3c21dbf59163bd45ba6f447fc"
-  integrity sha1-pRwmdUZY4KPCHb9ZFjvUW6b0R/w=
+  version "3.5.0"
+  resolved "https://ric.jfrog.io/ric/api/npm/npm/readable-stream/-/readable-stream-3.5.0.tgz#465d70e6d1087f6162d079cd0b5db7fbebfd1606"
+  integrity sha1-Rl1w5tEIf2Fi0HnNC123++v9FgY=
   dependencies:
     inherits "^2.0.3"
     string_decoder "^1.1.1"
@@ -1006,31 +905,6 @@ string-width@^1.0.1:
     is-fullwidth-code-point "^2.0.0"
     strip-ansi "^4.0.0"
 
-string.prototype.trim@^1.1.2:
-  version "1.2.0"
-  resolved "https://ric.jfrog.io/ric/api/npm/npm/string.prototype.trim/-/string.prototype.trim-1.2.0.tgz#75a729b10cfc1be439543dae442129459ce61e3d"
-  integrity sha1-dacpsQz8G+Q5VD2uRCEpRZzmHj0=
-  dependencies:
-    define-properties "^1.1.3"
-    es-abstract "^1.13.0"
-    function-bind "^1.1.1"
-
-string.prototype.trimleft@^2.0.0:
-  version "2.1.0"
-  resolved "https://ric.jfrog.io/ric/api/npm/npm/string.prototype.trimleft/-/string.prototype.trimleft-2.1.0.tgz#6cc47f0d7eb8d62b0f3701611715a3954591d634"
-  integrity sha1-bMR/DX641isPNwFhFxWjlUWR1jQ=
-  dependencies:
-    define-properties "^1.1.3"
-    function-bind "^1.1.1"
-
-string.prototype.trimright@^2.0.0:
-  version "2.1.0"
-  resolved "https://ric.jfrog.io/ric/api/npm/npm/string.prototype.trimright/-/string.prototype.trimright-2.1.0.tgz#669d164be9df9b6f7559fa8e89945b168a5a6c58"
-  integrity sha1-Zp0WS+nfm291WfqOiZRbFopabFg=
-  dependencies:
-    define-properties "^1.1.3"
-    function-bind "^1.1.1"
-
 string_decoder@^1.1.1:
   version "1.3.0"
   resolved "https://ric.jfrog.io/ric/api/npm/npm/string_decoder/-/string_decoder-1.3.0.tgz#42f114594a46cf1a8e30b0a84f56c78c3edac21e"
@@ -1126,14 +1000,6 @@ util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   resolved "https://ric.jfrog.io/ric/api/npm/npm/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
 
-util.promisify@~1.0.0:
-  version "1.0.0"
-  resolved "https://ric.jfrog.io/ric/api/npm/npm/util.promisify/-/util.promisify-1.0.0.tgz#440f7165a459c9a16dc145eb8e72f35687097030"
-  integrity sha1-RA9xZaRZyaFtwUXrjnLzVocJcDA=
-  dependencies:
-    define-properties "^1.1.2"
-    object.getownpropertydescriptors "^2.0.3"
-
 which-pm-runs@^1.0.0:
   version "1.0.0"
   resolved "https://ric.jfrog.io/ric/api/npm/npm/which-pm-runs/-/which-pm-runs-1.0.0.tgz#670b3afbc552e0b55df6b7780ca74615f23ad1cb"
@@ -1167,12 +1033,11 @@ xml-parse-from-string@^1.0.0:
   integrity sha1-qQKekp09vN7RafPG4oI42VpdWig=
 
 xml2js@^0.4.5:
-  version "0.4.22"
-  resolved "https://ric.jfrog.io/ric/api/npm/npm/xml2js/-/xml2js-0.4.22.tgz#4fa2d846ec803237de86f30aa9b5f70b6600de02"
-  integrity sha1-T6LYRuyAMjfehvMKqbX3C2YA3gI=
+  version "0.4.23"
+  resolved "https://ric.jfrog.io/ric/api/npm/npm/xml2js/-/xml2js-0.4.23.tgz#a0c69516752421eb2ac758ee4d4ccf58843eac66"
+  integrity sha1-oMaVFnUkIesqx1juTUzPWIQ+rGY=
   dependencies:
     sax ">=0.6.0"
-    util.promisify "~1.0.0"
     xmlbuilder "~11.0.0"
 
 xmlbuilder@~11.0.0:
