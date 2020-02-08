@@ -3,7 +3,7 @@ const program = require('commander');
 const { benchmarkJimp } = require('./jimp');
 const { benchmarkSharp } = require('./sharp');
 const { benchmarkJSMono } = require('./js-mono');
-const { benchmarkJSWasm } = require('./js-wasm');
+// const { benchmarkJSWasm } = require('./js-wasm');
 const { displayTime } = require('./hr-timer');
 const { IMAGE_FULL_PATH } = require('./image-load-save');
 
