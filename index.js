@@ -3,9 +3,7 @@ const program = require('commander');
 const { benchmarkJimp } = require('./jimp');
 const { benchmarkSharp } = require('./sharp');
 const { benchmarkJSMono } = require('./js-mono');
-const { benchmarkJSThreads } = require('./js-threads');
 const { benchmarkJSWasm } = require('./js-wasm');
-// const { benchmarkJSMulti } = require('./js-multi')
 const { displayTime } = require('./hr-timer');
 const { IMAGE_FULL_PATH } = require('./image-load-save');
 
@@ -20,8 +18,12 @@ async function benchmark(benchCallback, iterations, name) {
     const nanoseconds = await benchCallback(IMAGE_FULL_PATH, iterations);
 
     displayTime(`${name} benchmark total time: `, nanoseconds);
+
     if (iterations > 1) {
-      displayTime(`${name} benchmark mean iteration time: `, nanoseconds / iterations);
+      displayTime(
+        `${name} benchmark mean iteration time: `,
+        nanoseconds / iterations,
+      );
     }
   } catch (error) {
     if (error && error.message) {
@@ -38,9 +40,11 @@ program
   .option('-s, --sharp', 'Run the Sharp benchmark.')
   .option('-r, --raw', 'Run the raw JavaScript benchmark.')
   .option('-w, --wasm', 'Run the JavaScript + WebAssembly benchmark.')
-  .option('-t, --threads', 'Run the JavaScript benchmark using webworker-threads.')
-  .option('-m, --cluster', 'Run the JavaScript benchmark in cluster mode. No effect on other benchmarks.')
-  .option('-i, --iterations <iterations>', 'The number of times a given benchmark should be run. Default to 1', 1)
+  .option(
+    '-i, --iterations <iterations>',
+    'The number of times a given benchmark should be run. Default to 1',
+    1,
+  )
   .parse(process.argv);
 
 if (program.jimp) {
@@ -56,11 +60,5 @@ if (program.wasm) {
 }
 
 if (program.raw) {
-  if (program.cluster) {
-    // benchmark(benchmarkJSMulti, program.iterations, 'JavaScript Cluster')
-  } else if (program.threads) {
-    benchmark(benchmarkJSThreads, program.iterations, 'JavaScript Threads');
-  } else {
-    benchmark(benchmarkJSMono, program.iterations, 'JavaScript');
-  }
+  benchmark(benchmarkJSMono, program.iterations, 'JavaScript');
 }

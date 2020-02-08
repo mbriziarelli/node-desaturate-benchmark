@@ -7,21 +7,20 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "commander": "^2.12.2",
-    "jimp": "^0.2.28",
-    "sharp": "^0.18.4",
-    "webworker-threads": "^0.7.13"
+    "commander": "^4.1.1",
+    "jimp": "^0.9.3",
+    "sharp": "^0.24.0"
   },
   "scripts": {
-    "benchmark:sharp": "node . --sharp",
     "benchmark:jimp": "node . --jimp",
-    "benchmark:jsmono": "node . --jsmono",
-    "benchmark:jsmulti": "node . --jsmulti",
-    "eslint:fix": "eslint --fix ./**/*.js"
+    "benchmark:sharp": "node . --sharp",
+    "benchmark:raw": "node . --raw",
+    "benchmark:wasm": "node . --wasm",
+    "asbuild:untouched": "asc assembly/index.ts -b build/untouched.wasm -t build/untouched.wat --sourceMap --validate --debug",
+    "asbuild:optimized": "asc assembly/index.ts -b build/optimized.wasm -t build/optimized.wat --sourceMap --validate --optimize",
+    "asbuild": "npm run asbuild:untouched && npm run asbuild:optimized"
   },
   "devDependencies": {
-    "eslint": "^4.12.1",
-    "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.8.0"
+    "assemblyscript": "^0.9.1"
   }
 }
