@@ -7,9 +7,9 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "commander": "^4.1.1",
-    "jimp": "^0.9.3",
-    "sharp": "^0.24.0"
+    "commander": "^7.1.0",
+    "jimp": "^0.16.1",
+    "sharp": "^0.27.2"
   },
   "scripts": {
     "benchmark:jimp": "node . --jimp",
@@ -21,6 +21,6 @@
     "asbuild": "npm run asbuild:untouched && npm run asbuild:optimized"
   },
   "devDependencies": {
-    "assemblyscript": "^0.9.1"
+    "assemblyscript": "^0.18.11"
   }
 }
